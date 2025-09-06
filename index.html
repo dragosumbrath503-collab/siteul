@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <title>RC Community</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    :root{
+      --bg:#12001a;
+      --panel:#1a0026;
+      --glass:rgba(20,0,40,0.7);
+      --accent:#b080ff;
+      --text:#e0c3ff;
+      --sub:#c8a8ff;
+      --muted:#ddd;
+    }
+    *{box-sizing:border-box}
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: #fff;
+    }
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 40px;
+      background: var(--glass);
+      backdrop-filter: blur(10px);
+      z-index: 100;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    header img.logo { height: 40px; }
+    nav a {
+      margin: 0 15px;
+      color: var(--muted);
+      text-decoration: none;
+      font-weight: 500;
+    }
+    nav a:hover { color: var(--accent); }
+    .hero {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 120px 40px 60px 40px;
+      background: linear-gradient(135deg, #200030, var(--bg));
+      min-height: 70vh;
+      gap: 30px;
+    }
+    .hero-text { max-width: 720px; }
+    .hero-text h1 {
+      font-size: 42px;
+      margin-bottom: 16px;
+      color: var(--text);
+    }
+    .hero-text p {
+      font-size: 18px;
+      line-height: 1.6;
+      color: var(--sub);
+    }
+    .hero img.hero-logo { max-width: 280px; filter: drop-shadow(0 10px 24px rgba(176,128,255,.25)); }
+
+    /* STAFF SECTION */
+    .section {
+      padding: 40px;
+    }
+    .section h2{
+      margin: 0 0 20px 0;
+      font-size: 28px;
+      color: var(--text);
+      letter-spacing:.5px;
+    }
+    .staff-wrap{
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.35);
+    }
+    .staff-grid{
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+    @media (max-width: 1100px){
+      .staff-grid{ grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 768px){
+      .hero { flex-direction: column; text-align: center; }
+      .hero img.hero-logo { margin-top: 12px; }
+      .staff-grid{ grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width:520px){
+      .staff-grid{ grid-template-columns: 1fr; }
+    }
+    .staff-card{
+      position: relative;
+      border: 1px solid rgba(255,255,255,0.07);
+      background: rgba(255,255,255,0.03);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: transform .2s ease, border-color .2s ease;
+      /* make it a square */
+      aspect-ratio: 1/1;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+    }
+    .staff-card:hover{
+      transform: translateY(-3px);
+      border-color: rgba(255,255,255,0.12);
+    }
+    .card-top{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:16px;
+    }
+    .avatar{
+      flex:0 0 auto;
+      width:54px; height:54px;
+      border-radius:12px;
+      background: linear-gradient(135deg, #2c0a49, #3b0a62);
+      border: 1px solid rgba(255,255,255,0.1);
+      display:flex; align-items:center; justify-content:center;
+      font-weight:700;
+      color:#ffffffcc;
+      text-transform:uppercase;
+    }
+    .info{
+      min-width:0;
+    }
+    .name{
+      font-weight:700;
+      letter-spacing:.2px;
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    }
+    .role{
+      font-size:12px;
+      color:#cfc2ffb3;
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    }
+    .badge{
+      position:absolute;
+      top:10px; right:10px;
+      font-size:20px;
+      filter: drop-shadow(0 2px 6px rgba(0,0,0,.4));
+    }
+    .card-bottom{
+      padding: 14px 16px 16px 16px;
+      font-size:12px;
+      color:#c9b6ff8f;
+      border-top:1px dashed rgba(255,255,255,0.06);
+    }
+    .legend{
+      display:flex; flex-wrap:wrap; gap:10px; align-items:center;
+      margin-top:14px; font-size:14px; color:#d7caffcc;
+    }
+    .legend span{ opacity:.9 }
+    .legend .dot{ font-size:18px }
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: var(--panel);
+      color: #aaa;
+      font-size: 14px;
+      border-top:1px solid rgba(255,255,255,0.06);
+      margin-top:30px;
+    }
+    /* Helper: where to add photos later */
+    .avatar[data-photo="pending"]::after{
+      content: "IMG";
+      font-size: 12px;
+      letter-spacing: 1px;
+      opacity: .5;
+      position: relative;
+      top: 0;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="image-removebg-preview (1).png" alt="RC Logo" class="logo">
+    <nav>
+      <a href="#">Acasă</a>
+      <a href="#">Despre</a>
+      <a href="#staff">Echipă</a>
+      <a href="#">Servere</a>
+      <a href="#">Media</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="hero-text">
+      <h1>RC COMMUNITY - <br> Împreună scriem povestea!</h1>
+      <p>Cea mai unită și activă comunitate, pasionată de gaming și distracție non-stop. 
+         Alătură-te și descoperă serverele noastre, echipa noastră dedicată și anunțurile 
+         despre cele mai noi evenimente.</p>
+    </div>
+    <img src="image-removebg-preview (1).png" alt="RC Logo" class="hero-logo">
+  </section>
+
+  <!-- STAFF SECTION with "pătrate" (square cards) and room for photos later -->
+  <section id="staff" class="section">
+    <h2>STAFF</h2>
+    <div class="staff-wrap">
+      <div class="staff-grid">
+        <!-- Moderator: _soulz_1 -->
+        <article class="staff-card">
+          <div class="badge">🩵</div>
+          <div class="card-top">
+            <div class="avatar" data-photo="pending">S</div>
+            <div class="info">
+              <div class="name">_soulz_1</div>
+              <div class="role">Moderator</div>
+            </div>
+          </div>
+          <div class="card-bottom">Poza vine mai târziu — editează <strong>.avatar</strong> cu un <em>background-image</em> când e gata.</div>
+        </article>
+
+        <!-- Moderator: raduq.15 -->
+        <article class="staff-card">
+          <div class="badge">🩵</div>
+          <div class="card-top">
+            <div class="avatar" data-photo="pending">R</div>
+            <div class="info">
+              <div class="name">raduq.15</div>
+              <div class="role">Moderator</div>
+            </div>
+          </div>
+          <div class="card-bottom">Poza vine mai târziu.</div>
+        </article>
+
+        <!-- Moderator: franci30_ -->
+        <article class="staff-card">
+          <div class="badge">🩵</div>
+          <div class="card-top">
+            <div class="avatar" data-photo="pending">F</div>
+            <div class="info">
+              <div class="name">franci30_</div>
+              <div class="role">Moderator</div>
+            </div>
+          </div>
+          <div class="card-bottom">Poza vine mai târziu.</div>
+        </article>
+
+        <!-- Helper în Teste: stardroper -->
+        <article class="staff-card">
+          <div class="badge">🩶</div>
+          <div class="card-top">
+            <div class="avatar" data-photo="pending">S</div>
+            <div class="info">
+              <div class="name">stardroper</div>
+              <div class="role">Helper în Teste</div>
+            </div>
+          </div>
+          <div class="card-bottom">Poza vine mai târziu.</div>
+        </article>
+
+        <!-- Fondator: tiganuexe -->
+        <article class="staff-card">
+          <div class="badge">🤍</div>
+          <div class="card-top">
+            <div class="avatar" data-photo="pending">T</div>
+            <div class="info">
+              <div class="name">tiganuexe</div>
+              <div class="role">Fondator</div>
+            </div>
+          </div>
+          <div class="card-bottom">Poza vine mai târziu.</div>
+        </article>
+
+        <!-- C.E.O Community: _raduuu_ -->
+        <article class="staff-card">
+          <div class="badge">🖤</div>
+          <div class="card-top">
+            <div class="avatar" data-photo="pending">R</div>
+            <div class="info">
+              <div class="name">_raduuu_</div>
+              <div class="role">C.E.O Community</div>
+            </div>
+          </div>
+          <div class="card-bottom">Poza vine mai târziu.</div>
+        </article>
+
+      </div>
+
+      <div class="legend">
+        <span class="dot">🩵</span><span>Moderatori</span>
+        <span class="dot">🩶</span><span>Helper în Teste</span>
+        <span class="dot">🤍</span><span>Fondator</span>
+        <span class="dot">🖤</span><span>C.E.O Community</span>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    © 2025 RC Community. Toate drepturile rezervate.
+  </footer>
+
+  <!-- HOW TO ADD PHOTOS LATER
+    1) Pune imaginea în folderul paginii (ex: images/soulz.png).
+    2) Adaugă în cardul dorit un style inline pe .avatar:
+       <div class="avatar" style="background-image:url('images/soulz.png'); background-size:cover; background-position:center"></div>
+    3) (Opțional) Șterge textul inițialelor din avatar.
+  -->
+</body>
+</html>
